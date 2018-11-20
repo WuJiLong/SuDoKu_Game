@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SuDoKu_setting_Activity"></activity>
+        <activity android:name=".SuDoKu_setting_Activity" />
+        <activity android:name=".Solution_operation_Activity"></activity>
     </application>
 
 </manifest>
