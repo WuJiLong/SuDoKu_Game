@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 
 public class Setting {
     public static Activity activity;
-    private final static String KEY="com.example.wuqilong.sudokugame";//設定黨Key值
+    private final static String KEY="com.example.wuqilong.sudokugame";//設定檔Key值
 
     private final  static String SELECTMOD_KEY="SELECTMOD";//設定檔案中的KEY值
     public final static int SELECTMOD_BLOCK  =0x4145B;//選擇區塊再按數字
