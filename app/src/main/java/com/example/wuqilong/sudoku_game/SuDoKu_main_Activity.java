@@ -60,7 +60,7 @@ public class SuDoKu_main_Activity extends AppCompatActivity {
             case MyID.SETTING_CODE:
                 if(resultCode==MyID.SETTING_RESULT_CODE_SAVE){
                     setting_data.setDataForBundle(intent.getExtras());//儲存設定到類別
-                    Toast.makeText(this, "以儲存設定", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "已儲存設定", Toast.LENGTH_SHORT).show();
                 }else if(resultCode==MyID.SETTING_RESULT_CODE_CHANGE){
                     setting_data.setDataForBundle(intent.getExtras());//儲存設定到類別
                     Toast.makeText(this, "部分設定未儲存", Toast.LENGTH_SHORT).show();
