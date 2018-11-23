@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.wuqilong.sudoku_game.SuDoKu_class.Sulution_operation;
 import com.example.wuqilong.sudoku_game.define.Setting;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class Solution_operation_Activity extends AppCompatActivity {
     final int TEXTVIEW_BEGIN_ID=0x9487;
     int hold_block=40;
     int hold_num=1;
+    Sulution_operation topic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,7 @@ public class Solution_operation_Activity extends AppCompatActivity {
         init();
     }
     void init(){
+        topic=new Sulution_operation();
         Intent intent = getIntent();
         setting=new Setting();
         setting.setDataForBundle(intent.getExtras());//取得設定
@@ -38,13 +42,6 @@ public class Solution_operation_Activity extends AppCompatActivity {
         setTextViewListener();//設定TextView事件
         setNumButton();
 
-        Button returnbt=findViewById(R.id.SOA_return_BT);
-        returnbt.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                showReturnDialog();
-            }
-        });
 
     }
 
@@ -102,10 +99,8 @@ public class Solution_operation_Activity extends AppCompatActivity {
                         resetTextViewStyle();
                     }
                 }else{
-                    if(hold_num==0)
-                        ((TextView)v).setText("");
-                    else
-                        ((TextView)v).setText(String.valueOf(hold_num));
+                    topic.pushNUM(id,hold_num);
+                    resetTextViewStyle();
                 }
             }
         };
@@ -115,30 +110,49 @@ public class Solution_operation_Activity extends AppCompatActivity {
         }
     }
     void resetTextViewStyle(){
-        for(int i=0;i<81;i++){
-            int chunk_x=(i%9)/3;
-            int chunk_y=(i/9)/3;
+        int numForHoldBlock=topic.getNUM(hold_block);
 
-            TextView tv=findViewById(TEXTVIEW_BEGIN_ID + i);
-            if(!(tv.getBackground() instanceof GradientDrawable))
+        for(int i=0;i<81;i++) {
+            int chunk_x = (i % 9) / 3;
+            int chunk_y = (i / 9) / 3;
+
+            TextView tv = findViewById(TEXTVIEW_BEGIN_ID + i);
+            if (!(tv.getBackground() instanceof GradientDrawable))
                 tv.setBackground(new GradientDrawable());
-            GradientDrawable gd =(GradientDrawable)tv.getBackground();
+            GradientDrawable gd = (GradientDrawable) tv.getBackground();
             int strokeWidth = 10; // 5px not dp
-            //int roundRadius = 15; // 15px not dp
-            int strokeColor=setting.getColor2();
-            int fillColor=setting.getColor2();
-            if((chunk_x+chunk_y)%2==0) {
+            int strokeColor = setting.getColor2();
+            int fillColor = setting.getColor2();
+            if ((chunk_x + chunk_y) % 2 == 0) {
                 strokeColor = fillColor = setting.getColor1();
             }
             gd.setColor(fillColor);
-            if(setting.getSelectMod()==setting.SELECTMOD_BLOCK && i==hold_block)
-                gd.setStroke(10,Color.RED);
+            if (setting.getSelectMod() == setting.SELECTMOD_BLOCK && i == hold_block)
+                gd.setStroke(strokeWidth, Color.GREEN);
+            else if(!topic.checkTheNUM(i))
+                gd.setStroke(strokeWidth, Color.RED);
             else
                 gd.setStroke(strokeWidth, strokeColor);
+
+            //Typeface font=tv.getTypeface();
             tv.setBackground(gd);
+
+            if (!topic.checkTheNUM(i)){
+                tv.setTextColor(setting.getErrorFontColor());
+            }else if(setting.getSelectMod()==Setting.SELECTMOD_BLOCK && topic.getNUM(i)==numForHoldBlock && i!=hold_block){
+                tv.setTextColor(setting.getEqualsFontColor());
+            }else{
+                tv.setTextColor(setting.getFontColor());
+            }
+            tv.setTextSize(30);
+
+
+            if(topic.table[i/9][i%9]!=0)
+                tv.setText(String.valueOf(topic.table[i/9][i%9]));
+            else
+                tv.setText("");
         }
     }
-
 
     private void setNumButton(){
         final List<Button> BT=new ArrayList<>();
@@ -178,9 +192,26 @@ public class Solution_operation_Activity extends AppCompatActivity {
         gd.setColor(fillColor);
         gd.setCornerRadius(roundRadius);
         gd.setStroke(strokeWidth, strokeColor);
-        findViewById(R.id.SOA_clearall_BT).setBackground(gd);
 
-        findViewById(R.id.SOA_return_BT).setBackground(gd.getConstantState().newDrawable());
+        Button clearallbt=findViewById(R.id.SOA_clearall_BT);
+        clearallbt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                topic.clearALL();
+                resetTextViewStyle();
+            }
+        });
+        clearallbt.setBackground(gd);
+
+
+        Button returnbt=findViewById(R.id.SOA_return_BT);
+        returnbt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                showReturnDialog();
+            }
+        });
+        returnbt.setBackground(gd.getConstantState().newDrawable());
 
 
         View.OnClickListener listener=new View.OnClickListener(){
@@ -199,11 +230,9 @@ public class Solution_operation_Activity extends AppCompatActivity {
                     case R.id.SOA_num8_BT:key_num=8;break;
                     case R.id.SOA_num9_BT:key_num=9;break;
                 }
-                if(setting.getSelectMod()==setting.SELECTMOD_BLOCK){ TextView view= findViewById(TEXTVIEW_BEGIN_ID+hold_block);
-                    if(key_num==0)
-                        view.setText("");
-                    else
-                        view.setText(String.valueOf(key_num));
+                if(setting.getSelectMod()==setting.SELECTMOD_BLOCK){
+                    topic.pushNUM(hold_block,key_num);
+                    resetTextViewStyle();
                 }else{
                     /*code block*/{
                         Button button=BT.get(hold_num);
@@ -228,4 +257,5 @@ public class Solution_operation_Activity extends AppCompatActivity {
         for(Button b:BT)
             b.setOnClickListener(listener);
     }
+
 }
