@@ -151,5 +151,18 @@
         app:layout_constraintStart_toEndOf="@+id/SOA_clear_BT"
         app:layout_constraintTop_toBottomOf="@+id/SOA_num4_BT" />
 
+    <Button
+        android:id="@+id/SOA_solutionOperation_BT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="計算答案"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SOA_clearall_BT" />
+
 
 </android.support.constraint.ConstraintLayout>

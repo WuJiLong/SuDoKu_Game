@@ -1,14 +1,17 @@
 package com.example.wuqilong.sudoku_game;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -20,9 +23,15 @@ import com.example.wuqilong.sudoku_game.define.Setting;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.pow;
+
 public class Solution_operation_Activity extends AppCompatActivity {
     Setting setting;
     final int TEXTVIEW_BEGIN_ID=0x9487;
+
+    final String DATA_KEY="com.example.wuqilong.solution_operation";
+
+
     int hold_block=40;
     int hold_num=1;
     Sulution_operation topic;
@@ -37,24 +46,54 @@ public class Solution_operation_Activity extends AppCompatActivity {
         Intent intent = getIntent();
         setting=new Setting();
         setting.setDataForBundle(intent.getExtras());//取得設定
-
+        getData();
         createTextView();//創建81個TextView
         setTextViewListener();//設定TextView事件
         setNumButton();
 
-
+    }
+    void getData(){
+        SharedPreferences spref = getApplication()
+                .getSharedPreferences(DATA_KEY, Context.MODE_PRIVATE);
+        if(spref.getBoolean("UTILITY",false)){
+            for(int i=0;i<27;i++){
+                int n=spref.getInt("data_"+String.valueOf(i),0);
+                for(int j=0;j<3;j++){
+                    topic.pushNUM(i*3+j,(n%10));
+                    n=  n/10;
+                }
+            }
+        }
     }
 
     private void showReturnDialog() {
         AlertDialog.Builder MyAlertDialog = new AlertDialog.Builder(this);
         MyAlertDialog.setTitle("返回主畫面");
-        MyAlertDialog.setMessage("確定要返回主畫面?全部內容將會被清空。");
+        MyAlertDialog.setMessage("確定要返回主畫面?");
         DialogInterface.OnClickListener OkClick = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences spref = getApplication()
+                        .getSharedPreferences(DATA_KEY, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = spref.edit();
+
                 switch(which){
                     case DialogInterface.BUTTON_POSITIVE:
-
                     case DialogInterface.BUTTON_NEGATIVE:
+                        editor.clear();
+                        if(which==DialogInterface.BUTTON_POSITIVE){
+                            editor.putBoolean("UTILITY",true);
+                            for(int i=0;i<27;i++){
+                                int n=0;
+                                for(int j=0;j<3;j++)
+                                    n+=topic.getNUM(i*3+j)*pow(10,j);
+                                Log.i("SuDoKu",String.valueOf(n));
+                                editor.putInt("data_"+String.valueOf(i),n);
+                            }
+                        }else{
+                            editor.putBoolean("UTILITY",false);
+                        }
+
+                        editor.commit();
                         Intent intent=new Intent(Solution_operation_Activity.this,SuDoKu_main_Activity.class);
                         startActivity(intent);
                         break;
@@ -128,9 +167,9 @@ public class Solution_operation_Activity extends AppCompatActivity {
             }
             gd.setColor(fillColor);
             if (setting.getSelectMod() == setting.SELECTMOD_BLOCK && i == hold_block)
-                gd.setStroke(strokeWidth, Color.GREEN);
+                gd.setStroke(strokeWidth, setting.getCheckColor());
             else if(!topic.checkTheNUM(i))
-                gd.setStroke(strokeWidth, Color.RED);
+                gd.setStroke(strokeWidth, setting.getErrorCheckColor());
             else
                 gd.setStroke(strokeWidth, strokeColor);
 
@@ -139,8 +178,10 @@ public class Solution_operation_Activity extends AppCompatActivity {
 
             if (!topic.checkTheNUM(i)){
                 tv.setTextColor(setting.getErrorFontColor());
-            }else if(setting.getSelectMod()==Setting.SELECTMOD_BLOCK && topic.getNUM(i)==numForHoldBlock && i!=hold_block){
+            }else if(setting.getSelectMod()==Setting.SELECTMOD_BLOCK && topic.getNUM(i)==numForHoldBlock && i!=hold_block && numForHoldBlock!=0){
                 tv.setTextColor(setting.getEqualsFontColor());
+            }else if(topic.ans[i/9][i%9]!=0 && topic.table[i/9][i%9]==0){
+                tv.setTextColor(Color.GRAY);
             }else{
                 tv.setTextColor(setting.getFontColor());
             }
@@ -149,6 +190,8 @@ public class Solution_operation_Activity extends AppCompatActivity {
 
             if(topic.table[i/9][i%9]!=0)
                 tv.setText(String.valueOf(topic.table[i/9][i%9]));
+            else if(topic.ans[i/9][i%9]!=0)
+                tv.setText(String.valueOf(topic.ans[i/9][i%9]));
             else
                 tv.setText("");
         }
@@ -212,6 +255,20 @@ public class Solution_operation_Activity extends AppCompatActivity {
             }
         });
         returnbt.setBackground(gd.getConstantState().newDrawable());
+
+        Button sobt=findViewById(R.id.SOA_solutionOperation_BT);
+        sobt.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if(topic.operation()){
+                    Log.i("SuDoKu","OK!!!");
+                    resetTextViewStyle();
+                }else{
+                    Log.i("SuDoKu","error");
+                }
+            }
+        });
+        sobt.setBackground(gd.getConstantState().newDrawable());
 
 
         View.OnClickListener listener=new View.OnClickListener(){

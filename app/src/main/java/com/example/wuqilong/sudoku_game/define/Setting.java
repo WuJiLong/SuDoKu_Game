@@ -27,6 +27,11 @@ public class Setting {
     private final static String EQUALSFONTCOLOR_KEY="EQUALSFONTCOLOR";//設定檔案中的KEY值
     private int equalsFontColor=Color.GREEN;
 
+    private final static String CHECKCOLOR_KEY="CHECKCOLOR";//設定檔案中的KEY值
+    private int checkColor=Color.GREEN;
+    private final static String ERRORCHECKCOLOR_KEY="ERRORCHECKCOLOR";//設定檔案中的KEY值
+    private int errorCheckColor=Color.RED;
+
 
     public void loadSettingData(){
         SharedPreferences spref = activity.getApplication()
@@ -38,6 +43,10 @@ public class Setting {
         fontColor = spref.getInt(FONTCOLOR_KEY,/*default value*/fontColor);//取出數值
         errorFontColor = spref.getInt(ERRORFONTCOLOR_KEY,/*default value*/errorFontColor);//取出數值
         equalsFontColor = spref.getInt(EQUALSFONTCOLOR_KEY,/*default value*/equalsFontColor);//取出數值
+        checkColor=spref.getInt(CHECKCOLOR_KEY,/*default value*/checkColor);//取出數值
+        errorCheckColor=spref.getInt(ERRORCHECKCOLOR_KEY,/*default value*/errorCheckColor);//取出數值
+
+
     }
     public Bundle getDataBundle(){
         Bundle bundle=new Bundle();
@@ -47,6 +56,8 @@ public class Setting {
         bundle.putInt(FONTCOLOR_KEY,fontColor);
         bundle.putInt(ERRORFONTCOLOR_KEY,errorFontColor);
         bundle.putInt(EQUALSFONTCOLOR_KEY,equalsFontColor);
+        bundle.putInt(CHECKCOLOR_KEY,checkColor);
+        bundle.putInt(ERRORCHECKCOLOR_KEY,errorCheckColor);
         return bundle;
     }
 
@@ -57,6 +68,8 @@ public class Setting {
         fontColor=bundle.getInt(FONTCOLOR_KEY,fontColor);
         errorFontColor=bundle.getInt(ERRORFONTCOLOR_KEY,errorFontColor);
         equalsFontColor=bundle.getInt(EQUALSFONTCOLOR_KEY,equalsFontColor);
+        checkColor=bundle.getInt(CHECKCOLOR_KEY,checkColor);
+        errorCheckColor=bundle.getInt(ERRORCHECKCOLOR_KEY,errorCheckColor);
     }
     public void saveSettingData(){//儲存設定檔案
 
@@ -71,6 +84,9 @@ public class Setting {
         editor.putInt(FONTCOLOR_KEY,fontColor);//
         editor.putInt(ERRORFONTCOLOR_KEY,errorFontColor);//
         editor.putInt(EQUALSFONTCOLOR_KEY,equalsFontColor);//
+        editor.putInt(CHECKCOLOR_KEY,checkColor);//
+        editor.putInt(ERRORCHECKCOLOR_KEY,errorCheckColor);//
+
 
         editor.commit();//儲存設定
     }
@@ -81,6 +97,8 @@ public class Setting {
     public int getFontColor(){ return fontColor; }
     public int getErrorFontColor(){ return errorFontColor; }
     public int  getEqualsFontColor(){return equalsFontColor;}
+    public int getCheckColor(){return checkColor;}
+    public int getErrorCheckColor(){return errorCheckColor;}
 
     public void setSelectMod(int m){ selectMod=m; }
     public void setColor1(int c){ color1=c; }
@@ -88,6 +106,8 @@ public class Setting {
     public void setFontColor(int c){ fontColor=c; }
     public void setErrorFontColor(int c){ errorFontColor=c; }
     public void setEqualsFontColor(int c){ equalsFontColor=c;}
+    public void setCheckColor(int c){checkColor=c;}
+    public void setErrorCheckColor(int c){errorCheckColor=c;}
 
     public boolean equals(Setting setting){
         if(setting.getSelectMod()!=selectMod) return false;
@@ -96,6 +116,8 @@ public class Setting {
         if(setting.getFontColor()!=fontColor) return false;
         if(setting.getErrorFontColor()!=errorFontColor) return false;
         if(setting.getEqualsFontColor()!=equalsFontColor) return false;
+        if(setting.getCheckColor()!=checkColor)return false;
+        if(setting.getErrorCheckColor()!=errorCheckColor)return false;
         return true;
     }
 
@@ -106,5 +128,7 @@ public class Setting {
         fontColor=setting.getFontColor();
         errorFontColor=setting.getErrorFontColor();
         equalsFontColor=setting.getEqualsFontColor();
+        checkColor=setting.getCheckColor();
+        errorCheckColor=setting.getErrorCheckColor();
     }
 }
