@@ -51,8 +51,10 @@ public class Sulution_operation {
     public void pushNUM(int local,int num){
         if(num!=0 && table[local/9][local%9]==0)
             table[local/9][local%9]=num;
-        else if(num==0)
+        else if(num==0){
             table[local/9][local%9]=0;
+            ans[local/9][local%9]=0;
+        }
     }
     public int getNUM(int local){
         return table[local/9][local%9];
