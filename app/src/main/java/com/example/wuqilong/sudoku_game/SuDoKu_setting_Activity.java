@@ -137,6 +137,8 @@ public class SuDoKu_setting_Activity extends AppCompatActivity {
     }
 }
 
+
+
 class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context context;

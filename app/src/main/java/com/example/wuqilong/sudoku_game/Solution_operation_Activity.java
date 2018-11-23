@@ -75,10 +75,8 @@ public class Solution_operation_Activity extends AppCompatActivity {
                 SharedPreferences spref = getApplication()
                         .getSharedPreferences(DATA_KEY, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = spref.edit();
-
                 switch(which){
                     case DialogInterface.BUTTON_POSITIVE:
-                    case DialogInterface.BUTTON_NEGATIVE:
                         editor.clear();
                         if(which==DialogInterface.BUTTON_POSITIVE){
                             editor.putBoolean("UTILITY",true);
@@ -89,11 +87,9 @@ public class Solution_operation_Activity extends AppCompatActivity {
                                 Log.i("SuDoKu",String.valueOf(n));
                                 editor.putInt("data_"+String.valueOf(i),n);
                             }
-                        }else{
-                            editor.putBoolean("UTILITY",false);
                         }
-
                         editor.commit();
+                    case DialogInterface.BUTTON_NEGATIVE:
                         Intent intent=new Intent(Solution_operation_Activity.this,SuDoKu_main_Activity.class);
                         startActivity(intent);
                         break;
@@ -103,6 +99,13 @@ public class Solution_operation_Activity extends AppCompatActivity {
         MyAlertDialog.setNeutralButton("取消",OkClick );
         MyAlertDialog.setPositiveButton("儲存並返回",OkClick);
         MyAlertDialog.setNegativeButton("不儲存返回",OkClick );
+        MyAlertDialog.show();
+    }
+    private void showErrorDialog() {
+        AlertDialog.Builder MyAlertDialog = new AlertDialog.Builder(this);
+        MyAlertDialog.setTitle("無法計算");
+        MyAlertDialog.setMessage("題目錯誤導致無法計算!!");
+        MyAlertDialog.setNegativeButton("確定",null );
         MyAlertDialog.show();
     }
 
@@ -265,6 +268,7 @@ public class Solution_operation_Activity extends AppCompatActivity {
                     resetTextViewStyle();
                 }else{
                     Log.i("SuDoKu","error");
+                    showErrorDialog();
                 }
             }
         });
