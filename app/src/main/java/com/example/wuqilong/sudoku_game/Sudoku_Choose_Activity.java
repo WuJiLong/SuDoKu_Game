@@ -6,10 +6,13 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wuqilong.sudoku_game.SuDoKu_class.Sudoku_Topic;
+import com.example.wuqilong.sudoku_game.SuDoKu_class.Sudoku_Topic_Data;
 import com.example.wuqilong.sudoku_game.define.Setting;
 
 import java.text.ParsePosition;
@@ -21,29 +24,20 @@ import java.util.List;
 public class Sudoku_Choose_Activity extends AppCompatActivity {
     Setting setting;
     final int TEXTVIEW_BEGIN_ID=0x9487;
-    List<Sudoku_Topic> topicList=new ArrayList<>();
+    List<Sudoku_Topic> topicList;
+    int check=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku_choose);
         init();
-        //Date expiredDate = stringToDate("201901091926", "yyyyMMddHHmm");
     }
-    /*
-    private Date stringToDate(String aDate,String aFormat) {
-
-        if(aDate==null) return null;
-        ParsePosition pos = new ParsePosition(0);
-        SimpleDateFormat simpledateformat = new SimpleDateFormat(aFormat);
-        Date stringDate = simpledateformat.parse(aDate, pos);
-        return stringDate;
-
-    }*/
     private void init(){
         Intent intent = getIntent();
         setting=new Setting();
         setting.setDataForBundle(intent.getExtras());//取得設定
-
+        topicList= Sudoku_Topic_Data.getTopicList();
+        //Toast.makeText(this, "題目數量"+String.valueOf(topicList.size()), Toast.LENGTH_SHORT).show();
         settingButton();
         createTextView();
     }
@@ -55,7 +49,35 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        final Button lastBT=findViewById(R.id.last_topic_bt);
+        lastBT.setEnabled(false);
+        final Button nextBT=findViewById(R.id.next_topic_bt);
+        View.OnClickListener listener=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.getId()==R.id.last_topic_bt)
+                    check--;
+                else
+                    check++;
+                if(check<=0){
+                    check=0;
+                    lastBT.setEnabled(false);
+                    if(topicList.size()!=0)
+                        nextBT.setEnabled(true);
+                }else if(check>=topicList.size()-1){
+                    check = topicList.size()-1;
+                    nextBT.setEnabled(false);
+                    if(topicList.size()!=0)
+                        lastBT.setEnabled(true);
+                }else{
+                    nextBT.setEnabled(true);
+                    lastBT.setEnabled(true);
+                }
+                resetTextViewStyle();
+            }
+        };
+        lastBT.setOnClickListener(listener);
+        nextBT.setOnClickListener(listener);
     }
     void createTextView(){
         FrameLayout layout = findViewById(R.id.Choose_Layout);
@@ -78,7 +100,9 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
         resetTextViewStyle();
     }
     void resetTextViewStyle(){
-
+        if(check<0) check=0;
+        if(check>=topicList.size()) check=topicList.size()-1;
+        Sudoku_Topic t=topicList.get(check);
         for(int i=0;i<81;i++) {
             int chunk_x = (i % 9) / 3;
             int chunk_y = (i / 9) / 3;
@@ -94,8 +118,13 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
                 strokeColor = fillColor = setting.getColor1();
             }
             if(topicList.size()!=0) {
-                gd.setColor(fillColor);
-                gd.setStroke(strokeWidth, strokeColor);
+                if(t.show[i/9][i%9]){
+                    gd.setColor(Color.GRAY);
+                    gd.setStroke(strokeWidth,Color.GRAY);
+                }else{
+                    gd.setColor(fillColor);
+                    gd.setStroke(strokeWidth, strokeColor);
+                }
             }else{
                 gd.setColor(Color.GRAY);
                 gd.setStroke(strokeWidth,Color.GRAY);

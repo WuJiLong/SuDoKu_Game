@@ -302,6 +302,7 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }else if(holder instanceof CheckTopicData_Holder){
             CheckTopicData_Holder checkTopicDataHolder=(CheckTopicData_Holder) holder;
             checkTopicDataHolder.getNewDateListener();
+            ((TextView)view.findViewById(R.id.topic_num_tv)).setText("題目數量:"+String.valueOf(Sudoku_Topic_Data.getTopinNumber()));
             Date o=checkTopicDataHolder.getOldDate();
             Date n = checkTopicDataHolder.getNewDate();
 
@@ -607,7 +608,7 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         Toast.makeText(upDataBT.getContext(), "有讀取動作正在進行!請稍後再試!", Toast.LENGTH_SHORT).show();
                     } else if(newDate!=null){
                         upDataBT.setEnabled(false);
-                        Sudoku_Topic_Data.saveTopicForFIleBase(newDate,oldDateTV);
+                        Sudoku_Topic_Data.saveTopicForFIleBase(newDate,itemView);
                         oldDate=newDate;
                     }
                 }

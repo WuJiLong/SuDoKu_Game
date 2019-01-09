@@ -7,7 +7,7 @@
     tools:context=".Sudoku_Choose_Activity">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/next_topic_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Choose_Layout" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/last_topic_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
@@ -60,8 +60,8 @@
         android:layout_marginTop="28dp"
         android:text="開始遊玩"
         android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/next_topic_bt"
+        app:layout_constraintStart_toEndOf="@+id/last_topic_bt"
         app:layout_constraintTop_toBottomOf="@+id/Choose_Layout" />
 
     <Button
