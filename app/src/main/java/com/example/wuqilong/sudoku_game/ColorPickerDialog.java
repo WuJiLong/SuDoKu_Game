@@ -126,7 +126,10 @@ public class ColorPickerDialog extends Dialog {
 
             mPaint.setStrokeWidth(3);
             mPaint.setTextSize(100);
-            mPaint.setColor(Color.BLACK);
+            if(color_V>0.5)
+                mPaint.setColor(Color.BLACK);
+            else
+                mPaint.setColor(Color.WHITE);
             mPaint.setTextAlign(Paint.Align.CENTER);
             bounds = new Rect();
             mPaint.getTextBounds(getContext().getString(R.string.choos), 0, getContext().getString(R.string.choos).length(), bounds);

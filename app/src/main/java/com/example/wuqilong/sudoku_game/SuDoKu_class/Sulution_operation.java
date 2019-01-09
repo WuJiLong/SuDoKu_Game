@@ -24,8 +24,10 @@ public class Sulution_operation {
             ans[i/9][i%9]=table[i/9][i%9];
         }
         int ptr=0;
+        int x=0;
         while(true){
-            Log.i("SuDoKu",String.valueOf(ptr));
+            x++;
+            Log.i("SuDoKu",String.valueOf(x));
             if(ptr<0) return false;
             if(ptr>80) return true;
             if(getNUM(ptr)!=0){
@@ -97,4 +99,9 @@ public class Sulution_operation {
         return true;
     }
 
+    public boolean checkTheTopic(){
+        for(int i=0;i<81;i++)
+            if(!checkTheNUM(i)) return false;
+        return true;
+    }
 }

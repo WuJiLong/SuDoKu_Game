@@ -19,88 +19,106 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/setting_color1_1"
+        android:id="@+id/setting_block_1"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/color_frameLayout"
         app:layout_constraintTop_toTopOf="@+id/color_frameLayout" />
 
     <TextView
-        android:id="@+id/setting_color2_1"
+        android:id="@+id/setting_block_2"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toEndOf="@+id/setting_color1_1"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/setting_block_1"
         app:layout_constraintTop_toTopOf="@+id/color_frameLayout" />
 
     <TextView
-        android:id="@+id/setting_color1_2"
+        android:id="@+id/setting_block_3"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toEndOf="@+id/setting_color2_1"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/setting_block_2"
         app:layout_constraintTop_toTopOf="@+id/color_frameLayout" />
 
     <TextView
-        android:id="@+id/setting_color2_2"
+        android:id="@+id/setting_block_4"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="1dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/color_frameLayout"
-        app:layout_constraintTop_toBottomOf="@+id/setting_color1_1" />
+        app:layout_constraintTop_toBottomOf="@+id/setting_block_1" />
 
     <TextView
-        android:id="@+id/setting_color1_3"
+        android:id="@+id/setting_block_5"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
-        app:layout_constraintStart_toEndOf="@+id/setting_color2_2"
-        app:layout_constraintTop_toBottomOf="@+id/setting_color2_1" />
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/setting_block_4"
+        app:layout_constraintTop_toBottomOf="@+id/setting_block_2" />
 
     <TextView
-        android:id="@+id/setting_color2_3"
+        android:id="@+id/setting_block_6"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
-        app:layout_constraintStart_toEndOf="@+id/setting_color1_3"
-        app:layout_constraintTop_toBottomOf="@+id/setting_color1_2" />
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/setting_block_5"
+        app:layout_constraintTop_toBottomOf="@+id/setting_block_3" />
 
     <TextView
-        android:id="@+id/setting_color1_4"
+        android:id="@+id/setting_block_7"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="1dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/color_frameLayout"
-        app:layout_constraintTop_toBottomOf="@+id/setting_color2_2" />
+        app:layout_constraintTop_toBottomOf="@+id/setting_block_4" />
 
     <TextView
-        android:id="@+id/setting_color2_4"
+        android:id="@+id/setting_block_8"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
-        app:layout_constraintStart_toEndOf="@+id/setting_color1_4"
-        app:layout_constraintTop_toBottomOf="@+id/setting_color1_3" />
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/setting_block_7"
+        app:layout_constraintTop_toBottomOf="@+id/setting_block_5" />
 
     <TextView
-        android:id="@+id/setting_color1_5"
+        android:id="@+id/setting_block_9"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
-        app:layout_constraintStart_toEndOf="@+id/setting_color2_4"
-        app:layout_constraintTop_toBottomOf="@+id/setting_color2_3" />
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/setting_block_8"
+        app:layout_constraintTop_toBottomOf="@+id/setting_block_6"
+        android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="80dp"
@@ -119,7 +137,7 @@
         android:layout_marginEnd="48dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/color1_bt"
@@ -130,6 +148,6 @@
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toStartOf="@+id/color2_bt"
         app:layout_constraintStart_toEndOf="@+id/color_frameLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </android.support.constraint.ConstraintLayout>

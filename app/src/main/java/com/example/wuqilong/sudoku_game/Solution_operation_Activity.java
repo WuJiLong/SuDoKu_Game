@@ -183,10 +183,12 @@ public class Solution_operation_Activity extends AppCompatActivity {
                 tv.setTextColor(setting.getErrorFontColor());
             }else if(setting.getSelectMod()==Setting.SELECTMOD_BLOCK && topic.getNUM(i)==numForHoldBlock && i!=hold_block && numForHoldBlock!=0){
                 tv.setTextColor(setting.getEqualsFontColor());
+            }else if(setting.getSelectMod()==Setting.SELECTMOD_NUMBER && topic.getNUM(i)==hold_num){
+                tv.setTextColor(setting.getEqualsFontColor());
             }else if(topic.ans[i/9][i%9]!=0 && topic.table[i/9][i%9]==0){
-                tv.setTextColor(Color.GRAY);
-            }else{
                 tv.setTextColor(setting.getFontColor());
+            }else{
+                tv.setTextColor(setting.getTopicFontColor());
             }
             tv.setTextSize(30);
 
@@ -263,7 +265,9 @@ public class Solution_operation_Activity extends AppCompatActivity {
         sobt.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(topic.operation()){
+                if(!topic.checkTheTopic()){
+                    showErrorDialog();
+                }else if(topic.operation()){
                     Log.i("SuDoKu","OK!!!");
                     resetTextViewStyle();
                 }else{
@@ -293,7 +297,6 @@ public class Solution_operation_Activity extends AppCompatActivity {
                 }
                 if(setting.getSelectMod()==setting.SELECTMOD_BLOCK){
                     topic.pushNUM(hold_block,key_num);
-                    resetTextViewStyle();
                 }else{
                     /*code block*/{
                         Button button=BT.get(hold_num);
@@ -308,11 +311,12 @@ public class Solution_operation_Activity extends AppCompatActivity {
                         Button button=BT.get(hold_num);
                         GradientDrawable da=(GradientDrawable)button.getBackground();//因為已set過
                         int strokeWidth = 5; // 5px not dp
-                        int strokeColor=Color.parseColor("#FF0000");
+                        int strokeColor=setting.getCheckColor();
                         da.setStroke(strokeWidth, strokeColor);
                         button.setBackground(da);
                     }
                 }
+                resetTextViewStyle();
             }
         };
         for(Button b:BT)

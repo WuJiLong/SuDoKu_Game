@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -151,32 +153,100 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         this.setting=setting;
         //this.data=data;
     }
-
+    private void setBlockColor(View v){
+        v.findViewById(R.id.color_frameLayout).setBackgroundColor(0xff000000);
+        v.findViewById(R.id.setting_block_1).setBackgroundColor(Color.WHITE);
+        v.findViewById(R.id.setting_block_2).setBackgroundColor(Color.WHITE);
+        v.findViewById(R.id.setting_block_3).setBackgroundColor(Color.WHITE);
+        v.findViewById(R.id.setting_block_4).setBackgroundColor(Color.WHITE);
+        v.findViewById(R.id.setting_block_5).setBackgroundColor(Color.WHITE);
+        v.findViewById(R.id.setting_block_6).setBackgroundColor(Color.WHITE);
+        v.findViewById(R.id.setting_block_7).setBackgroundColor(Color.WHITE);
+        v.findViewById(R.id.setting_block_8).setBackgroundColor(Color.WHITE);
+        v.findViewById(R.id.setting_block_9).setBackgroundColor(Color.WHITE);
+        ((TextView)v.findViewById(R.id.setting_block_1)).setTextColor(Color.BLACK);
+        ((TextView)v.findViewById(R.id.setting_block_2)).setTextColor(Color.BLACK);
+        ((TextView)v.findViewById(R.id.setting_block_3)).setTextColor(Color.BLACK);
+        ((TextView)v.findViewById(R.id.setting_block_4)).setTextColor(Color.BLACK);
+        ((TextView)v.findViewById(R.id.setting_block_5)).setTextColor(Color.BLACK);
+        ((TextView)v.findViewById(R.id.setting_block_6)).setTextColor(Color.BLACK);
+        ((TextView)v.findViewById(R.id.setting_block_7)).setTextColor(Color.BLACK);
+        ((TextView)v.findViewById(R.id.setting_block_8)).setTextColor(Color.BLACK);
+        ((TextView)v.findViewById(R.id.setting_block_9)).setTextColor(Color.BLACK);
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type){
         switch (type){
-            case 0:
+            case 0://作答模式
                 View view0= LayoutInflater.from(context).inflate(R.layout.setting_selectmod,parent,false);
                 SelectViewHolder viewHolder0=new SelectViewHolder(view0);
                 viewHolder0.setTextView((TextView)view0.findViewById(R.id.select_mod_tv));
                 return viewHolder0;
-            case 1:
+            case 1://背景顏色
                 View view1= LayoutInflater.from(context).inflate(R.layout.setting_grid_color,parent,false);
+                ((TextView)view1.findViewById(R.id.textView)).setText("背景顏色配置：");
                 SetColor_12_Holder viewHolder1=new SetColor_12_Holder(view1);
                 ((FrameLayout)view1.findViewById(R.id.color_frameLayout)).setBackgroundColor(0xff000000);
-                viewHolder1.setColor1View((TextView) view1.findViewById(R.id.setting_color1_1),
-                        (TextView)view1.findViewById(R.id.setting_color1_2),
-                        (TextView)view1.findViewById(R.id.setting_color1_3),
-                        (TextView)view1.findViewById(R.id.setting_color1_4),
-                        (TextView)view1.findViewById(R.id.setting_color1_5));
-                viewHolder1.setColor2View((TextView) view1.findViewById(R.id.setting_color2_1),
-                        (TextView)view1.findViewById(R.id.setting_color2_2),
-                        (TextView)view1.findViewById(R.id.setting_color2_3),
-                        (TextView)view1.findViewById(R.id.setting_color2_4));
+                viewHolder1.setColor1View((TextView) view1.findViewById(R.id.setting_block_1),
+                        (TextView)view1.findViewById(R.id.setting_block_3),
+                        (TextView)view1.findViewById(R.id.setting_block_5),
+                        (TextView)view1.findViewById(R.id.setting_block_7),
+                        (TextView)view1.findViewById(R.id.setting_block_9));
+                viewHolder1.setColor2View((TextView) view1.findViewById(R.id.setting_block_2),
+                        (TextView)view1.findViewById(R.id.setting_block_4),
+                        (TextView)view1.findViewById(R.id.setting_block_6),
+                        (TextView)view1.findViewById(R.id.setting_block_8));
                 viewHolder1.setBT((Button)view1.findViewById(R.id.color1_bt),
                         (Button)view1.findViewById(R.id.color2_bt));
                 return viewHolder1;
+            case 2:
+                View view2= LayoutInflater.from(context).inflate(R.layout.setting_grid_color,parent,false);
+                SetFontColor_Holder viewHolder2=new SetFontColor_Holder(view2);
+                ((TextView)view2.findViewById(R.id.textView)).setText("文字顏色配置：");
+                setBlockColor(view2);
+                ((TextView)view2.findViewById(R.id.setting_block_1)).setText("9");
+                ((TextView)view2.findViewById(R.id.setting_block_2)).setText("4");
+                ((TextView)view2.findViewById(R.id.setting_block_5)).setText("8");
+                ((TextView)view2.findViewById(R.id.setting_block_6)).setText("7");
 
+                viewHolder2.setAnserView((TextView)view2.findViewById(R.id.setting_block_5));
+                viewHolder2.setTopicView((TextView)view2.findViewById(R.id.setting_block_1),
+                        (TextView)view2.findViewById(R.id.setting_block_2),
+                        (TextView)view2.findViewById(R.id.setting_block_6));
+                viewHolder2.setBT((Button)view2.findViewById(R.id.color1_bt),
+                        (Button)view2.findViewById(R.id.color2_bt));
+                return viewHolder2;
+            case 3:
+                View view3= LayoutInflater.from(context).inflate(R.layout.setting_grid_color,parent,false);
+                SetChenkColor_Holder viewHolder3=new SetChenkColor_Holder(view3);
+                ((TextView)view3.findViewById(R.id.textView)).setText("標記顏色配置：");
+                setBlockColor(view3);
+                ((TextView)view3.findViewById(R.id.setting_block_1)).setText("7");
+                ((TextView)view3.findViewById(R.id.setting_block_3)).setText("6");
+                ((TextView)view3.findViewById(R.id.setting_block_5)).setText("6");
+                ((TextView)view3.findViewById(R.id.setting_block_7)).setText("6");
+
+                viewHolder3.setChenkView(((TextView)view3.findViewById(R.id.setting_block_5)));
+                viewHolder3.addEqualsView(((TextView)view3.findViewById(R.id.setting_block_3)));
+                viewHolder3.addEqualsView(((TextView)view3.findViewById(R.id.setting_block_7)));
+                viewHolder3.setBT((Button)view3.findViewById(R.id.color1_bt),
+                        (Button)view3.findViewById(R.id.color2_bt));
+                return viewHolder3;
+            case 4:
+                View view4= LayoutInflater.from(context).inflate(R.layout.setting_grid_color,parent,false);
+                SetErrorColor_Holder viewHolder4=new SetErrorColor_Holder(view4);
+                ((TextView)view4.findViewById(R.id.textView)).setText("錯誤顏色配置：");
+                setBlockColor(view4);
+                ((TextView)view4.findViewById(R.id.setting_block_1)).setText("7");
+                ((TextView)view4.findViewById(R.id.setting_block_3)).setText("6");
+                ((TextView)view4.findViewById(R.id.setting_block_7)).setText("6");
+                ((TextView)view4.findViewById(R.id.setting_block_9)).setText("6");
+                viewHolder4.addErrorBlock( ((TextView)view4.findViewById(R.id.setting_block_3)));
+                viewHolder4.addErrorBlock( ((TextView)view4.findViewById(R.id.setting_block_7)));
+                viewHolder4.addErrorBlock( ((TextView)view4.findViewById(R.id.setting_block_9)));
+                viewHolder4.setBT((Button)view4.findViewById(R.id.color1_bt),
+                        (Button)view4.findViewById(R.id.color2_bt));
+                return viewHolder4;
             default:
         }
 
@@ -190,17 +260,30 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder,int postion){
         switch (postion){
-            case 0:
+            case 0://作答模式
                 SelectViewHolder viewHolder=(SelectViewHolder)holder;
                 if(setting.getSelectMod()==Setting.SELECTMOD_BLOCK)
                     viewHolder.setText(context.getString(R.string.selete_mod_string_block));
                 else if(setting.getSelectMod()==Setting.SELECTMOD_NUMBER)
                     viewHolder.setText(context.getString(R.string.selete_mod_string_number));
                 break;
-            case 1:
+            case 1://背景
                 SetColor_12_Holder color12Holder=(SetColor_12_Holder)holder;
                 color12Holder.setColor1(setting.getColor1());
                 color12Holder.setColor2(setting.getColor2());
+                break;
+            case 2://文字顏色
+                SetFontColor_Holder setFontColorHolder=(SetFontColor_Holder) holder;
+                setFontColorHolder.setTopicColor(setting.getTopicFontColor());
+                setFontColorHolder.setAnserColor(setting.getFontColor());
+                break;
+            case 3:
+                SetChenkColor_Holder setChenkColorHolder=(SetChenkColor_Holder) holder;
+                setChenkColorHolder.resetStyle();
+                break;
+            case 4:
+                SetErrorColor_Holder setErrorColorHolder=(SetErrorColor_Holder) holder;
+                setErrorColorHolder.resetStyle();
                 break;
             default:
         }
@@ -213,7 +296,7 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemCount(){
-        return 2;
+        return 5;
     }
     @Override
     public int getItemViewType(int position) {
@@ -281,10 +364,10 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     int colorCode;
                     if(v.getId()==R.id.color1_bt){
                         colorCode=setting.getColor1();
-                        new ColorPickerDialog(c, new UpdateColor((Button)v,setting,color1), colorCode,"顏色1選擇").show();
+                        new ColorPickerDialog(c, new UpdateColor(1,(Button)v,setting,color1), colorCode,"顏色1選擇").show();
                     }else{
                         colorCode=setting.getColor2();
-                        new ColorPickerDialog(c, new UpdateColor((Button)v,setting,color2), colorCode,"顏色2選擇").show();
+                        new ColorPickerDialog(c, new UpdateColor(1,(Button)v,setting,color2), colorCode,"顏色2選擇").show();
                     }
                     //pick a color (changed in the UpdateColor listener)
                 }
@@ -303,25 +386,217 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             color2BT.setBackgroundColor(color);
         }
     }
+    class SetFontColor_Holder extends  RecyclerView.ViewHolder{
+        private List<TextView> topicView=new ArrayList<TextView>();
+        private List<TextView> ansView=new ArrayList<TextView>();
+        private Button color1BT,color2BT;
+        public SetFontColor_Holder(View itemView) {
+            super(itemView);
+        }
+        public void setTopicView(TextView a,TextView b,TextView c){
+            topicView.add(a);
+            topicView.add(b);
+            topicView.add(c);
+        }
+        public void setAnserView(TextView a){
+            ansView.add(a);
+        }
+        public void setBT(Button c1,Button c2){
+            color1BT=c1;color2BT=c2;
+            final Context  c=context;
+            final List<TextView> topic=topicView;
+            final List<TextView> anser=ansView;
+            View.OnClickListener listener=new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+
+                    // ColorDrawable cd = (ColorDrawable) v.getBackground();
+                    int colorCode;
+                    if(v.getId()==R.id.color1_bt){
+                        colorCode=setting.getTopicFontColor();
+                        new ColorPickerDialog(c, new UpdateColor(2,(Button)v,setting,topic), colorCode,"題目文字顏色").show();
+                    }else{
+                        colorCode=setting.getFontColor();
+                        new ColorPickerDialog(c, new UpdateColor(2,(Button)v,setting,anser), colorCode,"答案文字顏色").show();
+                    }
+                    //pick a color (changed in the UpdateColor listener)
+                }
+            };
+            color1BT.setOnClickListener(listener);
+            color2BT.setOnClickListener(listener);
+        }
+        public void setTopicColor(int color){
+            for(TextView t:topicView)
+                t.setTextColor(color);
+            color1BT.setBackgroundColor(color);
+        }
+        public void setAnserColor(int color){
+            for(TextView t:ansView)
+                t.setTextColor(color);
+            color2BT.setBackgroundColor(color);
+        }
+
+    }
+    class SetChenkColor_Holder extends  RecyclerView.ViewHolder{
+        private TextView chenkView;
+        private List<TextView> ansView=new ArrayList<TextView>();
+        private Button color1BT,color2BT;
+        public SetChenkColor_Holder(View itemView) {
+            super(itemView);
+        }
+
+        public void setChenkView(TextView chenkView) {
+            this.chenkView = chenkView;
+        }
+        public void addEqualsView(TextView v1) {
+            ansView.add(v1);
+        }
+        public void setBT(Button c1,Button c2){
+            color1BT=c1;color2BT=c2;
+            final Context  c=context;
+            final List<TextView> chenk=new ArrayList<TextView>();
+            chenk.add(chenkView);
+            final List<TextView> anser=ansView;
+            View.OnClickListener listener=new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+
+                    // ColorDrawable cd = (ColorDrawable) v.getBackground();
+                    int colorCode;
+                    if(v.getId()==R.id.color1_bt){
+                        colorCode=setting.getCheckColor();
+                        new ColorPickerDialog(c, new UpdateColor(3,(Button)v,setting,chenk), colorCode,"選取框顏色").show();
+                    }else{
+                        colorCode=setting.getEqualsFontColor();
+                        new ColorPickerDialog(c, new UpdateColor(3,(Button)v,setting,anser), colorCode,"相同文字顏色").show();
+                    }
+                    //pick a color (changed in the UpdateColor listener)
+                }
+            };
+            color1BT.setOnClickListener(listener);
+            color2BT.setOnClickListener(listener);
+        }
+        public void resetStyle(){
+            for(TextView v:ansView)
+                v.setTextColor(setting.getEqualsFontColor());
+            color2BT.setBackgroundColor(setting.getEqualsFontColor());
+
+            if (!(chenkView.getBackground() instanceof GradientDrawable))
+                chenkView.setBackground(new GradientDrawable());
+            GradientDrawable gd = (GradientDrawable) chenkView.getBackground();
+            int strokeWidth = 10; // 5px not dp
+            gd.setColor(Color.WHITE);
+            gd.setStroke(strokeWidth, setting.getCheckColor());
+            chenkView.setBackground(gd);
+            color1BT.setBackgroundColor(setting.getCheckColor());
+        }
+    }
+
+    class SetErrorColor_Holder extends  RecyclerView.ViewHolder{
+        private List<TextView> errorView=new ArrayList<TextView>();
+        private Button color1BT,color2BT;
+        SetErrorColor_Holder(View itemView){super(itemView);}
+        void addErrorBlock(TextView v){errorView.add(v);}
+        public void setBT(Button c1,Button c2){
+            color1BT=c1;color2BT=c2;
+            final Context  c=context;
+            final List<TextView> error=errorView;
+
+            View.OnClickListener listener=new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+
+                    // ColorDrawable cd = (ColorDrawable) v.getBackground();
+                    int colorCode;
+                    if(v.getId()==R.id.color1_bt){
+                        colorCode=setting.getErrorCheckColor();
+                        new ColorPickerDialog(c, new UpdateColor(4,(Button)v,setting,error), colorCode,"錯誤框顏色").show();
+                    }else{
+                        colorCode=setting.getErrorFontColor();
+                        new ColorPickerDialog(c, new UpdateColor(4,(Button)v,setting,error), colorCode,"錯誤文字顏色").show();
+                    }
+                    //pick a color (changed in the UpdateColor listener)
+                }
+            };
+            color1BT.setOnClickListener(listener);
+            color2BT.setOnClickListener(listener);
+        }
+        public void resetStyle(){
+            for(TextView v:errorView){
+                v.setTextColor(setting.getErrorFontColor());
+
+                if (!(v.getBackground() instanceof GradientDrawable))
+                    v.setBackground(new GradientDrawable());
+                GradientDrawable gd = (GradientDrawable) v.getBackground();
+                int strokeWidth = 10; // 5px not dp
+                gd.setColor(Color.WHITE);
+                gd.setStroke(strokeWidth, setting.getErrorCheckColor());
+                v.setBackground(gd);
+            }
+            color1BT.setBackgroundColor(setting.getErrorCheckColor());
+            color2BT.setBackgroundColor(setting.getErrorFontColor());
+        }
+    }
 }
 
 class UpdateColor implements ColorPickerDialog.OnColorChangedListener {
     Button bt;
     List<TextView> view;
     Setting setting;
-    public UpdateColor(Button bt,Setting setting,List<TextView> view){
+    int ID;
+    public UpdateColor(int id,Button bt,Setting setting,List<TextView> view){
+        this.ID=id;
         this.bt=bt;
         this.view=view;
         this.setting=setting;
     }
     public void colorChanged(int color) {
         bt.setBackgroundColor(color);
-        for(TextView t:view)
-            t.setBackgroundColor(color);
-        if(bt.getId()==R.id.color1_bt) {
-            setting.setColor1(color);
-        }else{
-            setting.setColor2(color);
+        switch (ID) {
+            case 1:
+                for (TextView t : view)
+                    t.setBackgroundColor(color);
+                if (bt.getId() == R.id.color1_bt) {
+                    setting.setColor1(color);
+                } else {
+                    setting.setColor2(color);
+                }
+                break;
+            case 2:
+                for(TextView t:view)
+                    t.setTextColor(color);
+                if(bt.getId()==R.id.color1_bt) {
+                    setting.setTopicFontColor(color);
+                }else{
+                    setting.setFontColor(color);
+                }
+                break;
+            case 3: case 4:
+                if(bt.getId()==R.id.color1_bt) {
+                    for(TextView v:view){
+                        if (!(v.getBackground() instanceof GradientDrawable))
+                            v.setBackground(new GradientDrawable());
+                        GradientDrawable gd = (GradientDrawable) v.getBackground();
+                        int strokeWidth = 10; // 5px not dp
+                        gd.setColor(Color.WHITE);
+                        gd.setStroke(strokeWidth, color);
+                        v.setBackground(gd);
+                    }
+                    if(ID==3)
+                        setting.setCheckColor(color);
+                    else
+                        setting.setErrorCheckColor(color);
+                }else{
+                    for(TextView v:view){
+                        v.setTextColor(color);
+                    }
+                    if(ID==3)
+                        setting.setEqualsFontColor(color);
+                    else
+                        setting.setErrorFontColor(color);
+                }
+                break;
+
         }
 
     }
