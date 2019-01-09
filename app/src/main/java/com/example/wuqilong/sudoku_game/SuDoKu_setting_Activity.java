@@ -19,10 +19,19 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wuqilong.sudoku_game.SuDoKu_class.Sudoku_Topic_Data;
 import com.example.wuqilong.sudoku_game.define.MyID;
 import com.example.wuqilong.sudoku_game.define.Setting;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SuDoKu_setting_Activity extends AppCompatActivity {
@@ -37,7 +46,7 @@ public class SuDoKu_setting_Activity extends AppCompatActivity {
     }
     void init(){
         getIntentData();
-        recyclerViewInit();
+        recyclerViewInit();//顯示
         buttonInit();
     }
     void getIntentData(){
@@ -184,9 +193,8 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 return viewHolder0;
             case 1://背景顏色
                 View view1= LayoutInflater.from(context).inflate(R.layout.setting_grid_color,parent,false);
-                ((TextView)view1.findViewById(R.id.textView)).setText("背景顏色配置：");
+
                 SetColor_12_Holder viewHolder1=new SetColor_12_Holder(view1);
-                ((FrameLayout)view1.findViewById(R.id.color_frameLayout)).setBackgroundColor(0xff000000);
                 viewHolder1.setColor1View((TextView) view1.findViewById(R.id.setting_block_1),
                         (TextView)view1.findViewById(R.id.setting_block_3),
                         (TextView)view1.findViewById(R.id.setting_block_5),
@@ -198,67 +206,116 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         (TextView)view1.findViewById(R.id.setting_block_8));
                 viewHolder1.setBT((Button)view1.findViewById(R.id.color1_bt),
                         (Button)view1.findViewById(R.id.color2_bt));
+
                 return viewHolder1;
             case 2:
                 View view2= LayoutInflater.from(context).inflate(R.layout.setting_grid_color,parent,false);
                 SetFontColor_Holder viewHolder2=new SetFontColor_Holder(view2);
-                ((TextView)view2.findViewById(R.id.textView)).setText("文字顏色配置：");
-                setBlockColor(view2);
-                ((TextView)view2.findViewById(R.id.setting_block_1)).setText("9");
-                ((TextView)view2.findViewById(R.id.setting_block_2)).setText("4");
-                ((TextView)view2.findViewById(R.id.setting_block_5)).setText("8");
-                ((TextView)view2.findViewById(R.id.setting_block_6)).setText("7");
-
                 viewHolder2.setAnserView((TextView)view2.findViewById(R.id.setting_block_5));
                 viewHolder2.setTopicView((TextView)view2.findViewById(R.id.setting_block_1),
                         (TextView)view2.findViewById(R.id.setting_block_2),
                         (TextView)view2.findViewById(R.id.setting_block_6));
                 viewHolder2.setBT((Button)view2.findViewById(R.id.color1_bt),
                         (Button)view2.findViewById(R.id.color2_bt));
+
                 return viewHolder2;
             case 3:
                 View view3= LayoutInflater.from(context).inflate(R.layout.setting_grid_color,parent,false);
                 SetChenkColor_Holder viewHolder3=new SetChenkColor_Holder(view3);
-                ((TextView)view3.findViewById(R.id.textView)).setText("標記顏色配置：");
-                setBlockColor(view3);
-                ((TextView)view3.findViewById(R.id.setting_block_1)).setText("7");
-                ((TextView)view3.findViewById(R.id.setting_block_3)).setText("6");
-                ((TextView)view3.findViewById(R.id.setting_block_5)).setText("6");
-                ((TextView)view3.findViewById(R.id.setting_block_7)).setText("6");
 
                 viewHolder3.setChenkView(((TextView)view3.findViewById(R.id.setting_block_5)));
                 viewHolder3.addEqualsView(((TextView)view3.findViewById(R.id.setting_block_3)));
                 viewHolder3.addEqualsView(((TextView)view3.findViewById(R.id.setting_block_7)));
                 viewHolder3.setBT((Button)view3.findViewById(R.id.color1_bt),
                         (Button)view3.findViewById(R.id.color2_bt));
+
                 return viewHolder3;
             case 4:
                 View view4= LayoutInflater.from(context).inflate(R.layout.setting_grid_color,parent,false);
                 SetErrorColor_Holder viewHolder4=new SetErrorColor_Holder(view4);
-                ((TextView)view4.findViewById(R.id.textView)).setText("錯誤顏色配置：");
-                setBlockColor(view4);
-                ((TextView)view4.findViewById(R.id.setting_block_1)).setText("7");
-                ((TextView)view4.findViewById(R.id.setting_block_3)).setText("6");
-                ((TextView)view4.findViewById(R.id.setting_block_7)).setText("6");
-                ((TextView)view4.findViewById(R.id.setting_block_9)).setText("6");
                 viewHolder4.addErrorBlock( ((TextView)view4.findViewById(R.id.setting_block_3)));
                 viewHolder4.addErrorBlock( ((TextView)view4.findViewById(R.id.setting_block_7)));
                 viewHolder4.addErrorBlock( ((TextView)view4.findViewById(R.id.setting_block_9)));
                 viewHolder4.setBT((Button)view4.findViewById(R.id.color1_bt),
                         (Button)view4.findViewById(R.id.color2_bt));
                 return viewHolder4;
+            case 5:
+                View view5= LayoutInflater.from(context).inflate(R.layout.setting_topic_data,parent,false);
+                CheckTopicData_Holder viewHolder5=new CheckTopicData_Holder(view5);
+                viewHolder5.setDateTextView((TextView)view5.findViewById(R.id.date_tv),(TextView)view5.findViewById(R.id.new_date_tv));
+                viewHolder5.setButton((Button)view5.findViewById(R.id.up_data_bt));
+                return viewHolder5;
             default:
         }
 
-        //viewHolder.setTvTitle((TextView) view.findViewById(R.id.item_title));
-        //viewHolder.setSubTitle((TextView) view.findViewById(R.id.subTitle));
-        //viewHolder.setTextView((TextView) view.findViewById(R.id.text));
-        // imageView2
-        // viewHolder.setImageView((ImageView) view.findViewById(R.id.imageView2));
         return null;
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder,int postion){
+        View view=holder.itemView;
+        if(holder instanceof SelectViewHolder){//0
+            SelectViewHolder viewHolder=(SelectViewHolder)holder;
+            if(setting.getSelectMod()==Setting.SELECTMOD_BLOCK)
+                viewHolder.setText(context.getString(R.string.selete_mod_string_block));
+            else if(setting.getSelectMod()==Setting.SELECTMOD_NUMBER)
+                viewHolder.setText(context.getString(R.string.selete_mod_string_number));
+        }else if(holder instanceof SetColor_12_Holder){//1
+            SetColor_12_Holder color12Holder=(SetColor_12_Holder)holder;
+
+            ((TextView)view.findViewById(R.id.textView)).setText("背景顏色配置：");
+            ((FrameLayout)view.findViewById(R.id.color_frameLayout)).setBackgroundColor(Color.BLACK);
+
+            color12Holder.setColor1(setting.getColor1());
+            color12Holder.setColor2(setting.getColor2());
+        }else if(holder instanceof SetFontColor_Holder){//2
+            SetFontColor_Holder setFontColorHolder=(SetFontColor_Holder) holder;
+
+            ((TextView)view.findViewById(R.id.textView)).setText("文字顏色配置：");
+            setBlockColor(view);
+            ((TextView)view.findViewById(R.id.setting_block_1)).setText("9");
+            ((TextView)view.findViewById(R.id.setting_block_2)).setText("4");
+            ((TextView)view.findViewById(R.id.setting_block_5)).setText("8");
+            ((TextView)view.findViewById(R.id.setting_block_6)).setText("7");
+
+            setFontColorHolder.setTopicColor(setting.getTopicFontColor());
+            setFontColorHolder.setAnserColor(setting.getFontColor());
+        }else if(holder instanceof SetChenkColor_Holder){//3
+            SetChenkColor_Holder setChenkColorHolder=(SetChenkColor_Holder) holder;
+            ((TextView)view.findViewById(R.id.textView)).setText("標記顏色配置：");
+            setBlockColor(view);
+            ((TextView)view.findViewById(R.id.setting_block_1)).setText("7");
+            ((TextView)view.findViewById(R.id.setting_block_3)).setText("6");
+            ((TextView)view.findViewById(R.id.setting_block_5)).setText("6");
+            ((TextView)view.findViewById(R.id.setting_block_7)).setText("6");
+
+            setChenkColorHolder.resetStyle();
+        }else if(holder instanceof SetErrorColor_Holder){//4
+            SetErrorColor_Holder setErrorColorHolder=(SetErrorColor_Holder) holder;
+            ((TextView)view.findViewById(R.id.textView)).setText("錯誤顏色配置：");
+            setBlockColor(view);
+            ((TextView)view.findViewById(R.id.setting_block_1)).setText("7");
+            ((TextView)view.findViewById(R.id.setting_block_3)).setText("6");
+            ((TextView)view.findViewById(R.id.setting_block_7)).setText("6");
+            ((TextView)view.findViewById(R.id.setting_block_9)).setText("6");
+
+            setErrorColorHolder.resetStyle();
+        }else if(holder instanceof CheckTopicData_Holder){
+            CheckTopicData_Holder checkTopicDataHolder=(CheckTopicData_Holder) holder;
+            checkTopicDataHolder.getNewDateListener();
+            Date o=checkTopicDataHolder.getOldDate();
+            Date n = checkTopicDataHolder.getNewDate();
+
+            if(o==null || n==null){
+                checkTopicDataHolder.enableButton(false);
+            }else if(!o.equals(n)){
+                checkTopicDataHolder.enableButton(true);
+            }else{
+                checkTopicDataHolder.enableButton(false);
+            }
+
+        }
+
+        /*
         switch (postion){
             case 0://作答模式
                 SelectViewHolder viewHolder=(SelectViewHolder)holder;
@@ -286,17 +343,12 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 setErrorColorHolder.resetStyle();
                 break;
             default:
-        }
-       /* RecyclerData item=data.get(postion);
-        holder.setTitleString(item.getTitle());
-        holder.setSubTitleString(item.getSubTitle());
-        holder.setTextViewString(item.getText());
-        holder.setimageViewImage(item.getpictureID());*/
+        }*/
     }
 
     @Override
     public int getItemCount(){
-        return 5;
+        return 6;
     }
     @Override
     public int getItemViewType(int position) {
@@ -491,7 +543,6 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             color1BT.setBackgroundColor(setting.getCheckColor());
         }
     }
-
     class SetErrorColor_Holder extends  RecyclerView.ViewHolder{
         private List<TextView> errorView=new ArrayList<TextView>();
         private Button color1BT,color2BT;
@@ -535,6 +586,95 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             }
             color1BT.setBackgroundColor(setting.getErrorCheckColor());
             color2BT.setBackgroundColor(setting.getErrorFontColor());
+        }
+    }
+
+    class CheckTopicData_Holder extends RecyclerView.ViewHolder{
+        TextView oldDateTV,newDateTV;
+        Date newDate,oldDate;
+        Button upDataBT;
+        CheckTopicData_Holder(View itemView){super(itemView);}
+        public void setDateTextView(TextView OLD,TextView NEW){
+            this.oldDateTV=OLD;
+            this.newDateTV=NEW;
+        }
+        public void setButton(Button b){
+            this.upDataBT=b;
+            upDataBT.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(Sudoku_Topic_Data.reading){
+                        Toast.makeText(upDataBT.getContext(), "有讀取動作正在進行!請稍後再試!", Toast.LENGTH_SHORT).show();
+                    } else if(newDate!=null){
+                        upDataBT.setEnabled(false);
+                        Sudoku_Topic_Data.saveTopicForFIleBase(newDate,oldDateTV);
+                        oldDate=newDate;
+                    }
+                }
+            });
+        }
+        public void enableButton(boolean bool){
+            upDataBT.setEnabled(bool);
+        }
+        public Date getOldDate(){
+            oldDate= Sudoku_Topic_Data.getOldDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+            String dateString = sdf.format(oldDate);
+            oldDateTV.setText(dateString);
+            return oldDate;
+        }
+        public Date getNewDate(){
+
+            return newDate;
+        }
+        public void getNewDateListener() {
+
+            DatabaseReference reference_contacts = FirebaseDatabase.getInstance().getReference("version");
+            //reference_contacts.child("version").getKey();
+            newDateTV.setText("正在抓取...");
+            ValueEventListener listener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Get Post object and use the values to update the UI
+                    //Post post = dataSnapshot.getValue(Post.class);
+                    String s=dataSnapshot.getValue().toString();
+                    ParsePosition pos = new ParsePosition(0);
+                    SimpleDateFormat simpledateformat = new SimpleDateFormat("yyyyMMddHHmm");
+                    newDate = simpledateformat.parse(s, pos);
+                    newDateTV.setText(s);
+
+                    if(oldDate==null || newDate==null){
+                        enableButton(false);
+                    }else if(!oldDate.equals(newDate)){
+                        enableButton(true);
+                    }else{
+                        enableButton(false);
+                    }
+                    Toast.makeText(newDateTV.getContext(), "版本號已抓取", Toast.LENGTH_SHORT).show();
+                    // ...
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Getting Post failed, log a message
+                    //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                    // ...
+                    newDateTV.setText("網路錯誤");
+                    newDate=null;
+                }
+            };
+            reference_contacts.addValueEventListener(listener);//與filebase同步更新
+            //reference_contacts.addListenerForSingleValueEvent(listener);//只抓取一次資料
+
+            /*reference_contacts.addListenerForSingleValueEvent(listener);
+            newDate= Sudoku_Topic_Data.getNewDate();
+            if(newDate==null){
+                newDateTV.setText("網路錯誤");
+            }else{
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+                String dateString = sdf.format(newDateTV);
+                newDateTV.setText(dateString);
+            }*/
+            //return newDate;
         }
     }
 }

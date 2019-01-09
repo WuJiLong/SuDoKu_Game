@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -110,7 +109,7 @@ public class Solution_operation_Activity extends AppCompatActivity {
     }
 
     void createTextView(){
-        FrameLayout layout = findViewById(R.id.SOA_Layout);
+        FrameLayout layout = findViewById(R.id.Choose_Layout);
         layout.setBackgroundColor(Color.BLACK);
         for(int i=0;i<81;i++){
 

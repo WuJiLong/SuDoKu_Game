@@ -31,11 +31,14 @@ public class SuDoKu_main_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 switch(v.getId()){
                     case R.id.main_to_play_BT:
-                        break;
-                    case R.id.main_to_osa_BT:
-                        Intent intent=new Intent(SuDoKu_main_Activity.this,Solution_operation_Activity.class);
+                        Intent intent=new Intent(SuDoKu_main_Activity.this,Sudoku_Choose_Activity.class);
                         intent.putExtras(setting_data.getDataBundle());
                         startActivity(intent);
+                        break;
+                    case R.id.main_to_osa_BT:
+                        Intent intent_osa=new Intent(SuDoKu_main_Activity.this,Solution_operation_Activity.class);
+                        intent_osa.putExtras(setting_data.getDataBundle());
+                        startActivity(intent_osa);
                         break;
                     case R.id.main_to_setting_BT:
                         Intent intent_setting=new Intent(SuDoKu_main_Activity.this,SuDoKu_setting_Activity.class);

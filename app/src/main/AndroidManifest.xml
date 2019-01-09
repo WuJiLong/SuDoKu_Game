@@ -17,11 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SuDoKu_setting_Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Solution_operation_Activity"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".SuDoKu_setting_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Solution_operation_Activity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Sudoku_Choose_Activity"></activity>
     </application>
 
 </manifest>
