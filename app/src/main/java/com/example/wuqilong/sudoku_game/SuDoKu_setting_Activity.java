@@ -155,7 +155,6 @@ class RecvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private Context context;
     private Setting setting;
 
-    //private ArrayList<RecyclerData> data;
 
     public RecvAdapter(Context con,Setting setting){
         this.context=con;

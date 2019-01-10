@@ -2,6 +2,7 @@ package com.example.wuqilong.sudoku_game;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.net.wifi.aware.SubscribeDiscoverySession;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
+
 public class Sudoku_Choose_Activity extends AppCompatActivity {
     Setting setting;
     final int TEXTVIEW_BEGIN_ID=0x9487;
@@ -39,6 +42,7 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
         setting=new Setting();
         setting.setDataForBundle(intent.getExtras());//取得設定
         topicList= Sudoku_Topic_Data.getTopicList();
+        Toast.makeText(this, "題目數量"+String.valueOf(topicList.size()), Toast.LENGTH_SHORT).show();
         if(topicList.size()>=1) chenkTopic=topicList.get(0);
         //Toast.makeText(this, "題目數量"+String.valueOf(topicList.size()), Toast.LENGTH_SHORT).show();
         settingButton();
@@ -58,7 +62,7 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
             }
         });
         if(topicList.size()==0) findViewById(R.id.start_bt).setEnabled(false);
-
+        if(topicList.size()==0) findViewById(R.id.next_topic_bt).setEnabled(false);
         findViewById(R.id.to_main_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,9 +123,11 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
         resetTextViewStyle();
     }
     void resetTextViewStyle(){
-        if(check<0) check=0;
-        if(check>=topicList.size()) check=topicList.size()-1;
-        Sudoku_Topic t=topicList.get(check);
+        if(check<0 ||topicList.size()==0) check=0;
+        else if(check>=topicList.size()) check=topicList.size()-1;
+        Sudoku_Topic t=null;
+        if(topicList.size()!=0)
+            t=topicList.get(check);
         for(int i=0;i<81;i++) {
             int chunk_x = (i % 9) / 3;
             int chunk_y = (i / 9) / 3;
@@ -137,12 +143,17 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
                 strokeColor = fillColor = setting.getColor1();
             }
             if(topicList.size()!=0) {
+                gd.setColor(fillColor);
+                gd.setStroke(strokeWidth, strokeColor);
                 if(t.show[i/9][i%9]){
-                    gd.setColor(Color.GRAY);
-                    gd.setStroke(strokeWidth,Color.GRAY);
+                    tv.setText("?");
+                    tv.setTextSize(30);
+                    tv.setTypeface(tv.getTypeface(), Typeface.BOLD);
+                    tv.setTextColor(Color.GRAY);
+                    //gd.setColor(Color.GRAY);
+                    //gd.setStroke(strokeWidth,Color.GRAY);
                 }else{
-                    gd.setColor(fillColor);
-                    gd.setStroke(strokeWidth, strokeColor);
+                    tv.setText("");
                 }
             }else{
                 gd.setColor(Color.GRAY);

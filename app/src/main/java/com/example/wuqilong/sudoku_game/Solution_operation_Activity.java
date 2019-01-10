@@ -226,7 +226,7 @@ public class Solution_operation_Activity extends AppCompatActivity {
             gd.setCornerRadius(roundRadius);
 
             Button button=BT.get(i);
-            if(hold_num==i && setting.getSelectMod()==setting.SELECTMOD_NUMBER) strokeColor=Color.RED;
+            if(hold_num==i && setting.getSelectMod()==setting.SELECTMOD_NUMBER) strokeColor=setting.getCheckColor();
             else strokeColor=Color.parseColor("#000000");
             gd.setStroke(strokeWidth, strokeColor);
             button.setBackground(gd);
