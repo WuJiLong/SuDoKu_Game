@@ -18,6 +18,10 @@ public class SuDoKu_main_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_sudoku_main);
         init();
     }
+    @Override
+    public void onBackPressed() {
+
+    }
     void init(){
         Setting.activity=this;
         setting_data=new Setting();

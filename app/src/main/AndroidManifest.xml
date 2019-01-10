@@ -23,7 +23,9 @@
         <activity
             android:name=".Solution_operation_Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Sudoku_Choose_Activity"></activity>
+        <activity android:name=".Sudoku_Choose_Activity" />
+        <activity android:name=".SudokuPlayingActivity" />
+        <activity android:name=".Sudoku_Pass_Activity"></activity>
     </application>
 
 </manifest>

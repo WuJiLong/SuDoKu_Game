@@ -3,6 +3,7 @@ package com.example.wuqilong.sudoku_game;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.wifi.aware.SubscribeDiscoverySession;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,7 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
     final int TEXTVIEW_BEGIN_ID=0x9487;
     List<Sudoku_Topic> topicList;
     int check=0;
+    static Sudoku_Topic chenkTopic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +39,26 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
         setting=new Setting();
         setting.setDataForBundle(intent.getExtras());//取得設定
         topicList= Sudoku_Topic_Data.getTopicList();
+        if(topicList.size()>=1) chenkTopic=topicList.get(0);
         //Toast.makeText(this, "題目數量"+String.valueOf(topicList.size()), Toast.LENGTH_SHORT).show();
         settingButton();
         createTextView();
     }
     void settingButton(){
+
+        findViewById(R.id.start_bt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(chenkTopic!=null){
+                    chenkTopic.randomAns();
+                    Intent intent=new Intent(Sudoku_Choose_Activity.this,SudokuPlayingActivity.class);
+                    intent.putExtras(setting.getDataBundle());
+                    startActivity(intent);
+                }
+            }
+        });
+        if(topicList.size()==0) findViewById(R.id.start_bt).setEnabled(false);
+
         findViewById(R.id.to_main_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +90,8 @@ public class Sudoku_Choose_Activity extends AppCompatActivity {
                     nextBT.setEnabled(true);
                     lastBT.setEnabled(true);
                 }
+                if(topicList.size()>=1)
+                    chenkTopic=topicList.get(check);
                 resetTextViewStyle();
             }
         };

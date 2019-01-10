@@ -48,6 +48,7 @@ public class Sudoku_Topic {
 
                 int dx=j%3;
                 int dy=j/3;
+                if(ans[chunk_y+dy][chunk_x+dx]==0) return false;
                 if(block[ans[chunk_y+dy][chunk_x+dx]-1]) block[ans[chunk_y+dy][chunk_x+dx]-1]=false;
                 else     return false;
             }
