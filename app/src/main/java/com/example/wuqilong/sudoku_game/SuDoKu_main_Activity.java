@@ -15,7 +15,7 @@ public class SuDoKu_main_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sudoku_main);
+          setContentView(R.layout.activity_sudoku_main);
         init();
     }
     @Override

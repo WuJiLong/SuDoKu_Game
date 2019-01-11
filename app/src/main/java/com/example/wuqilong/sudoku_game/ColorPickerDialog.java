@@ -1,3 +1,7 @@
+/****************************************************
+ * 修改於：　https://tekeye.uk/android/examples/ui/android-color-picker-tutorial
+ * ****************************************************/
+
 package com.example.wuqilong.sudoku_game;
 
 import android.app.Dialog;
